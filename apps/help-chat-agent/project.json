@@ -41,7 +41,13 @@
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/help-chat-agent/src/environment.ts",
+              "with": "apps/help-chat-agent/src/environment.local.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
