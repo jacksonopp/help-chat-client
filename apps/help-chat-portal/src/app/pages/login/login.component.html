@@ -1,0 +1,91 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold">
+          Sign in to your account
+        </h2>
+      </div>
+      
+      <p-toast position="top-center" key="login-toast"></p-toast>
+      
+      <p-card>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <div>
+            <label for="email" class="block text-sm font-medium">
+              Email address
+            </label>
+            <div class="mt-1">
+              <input
+                id="email"
+                type="email"
+                pInputText
+                formControlName="email"
+                class="w-full"
+                placeholder="Enter your email"
+                [class.ng-invalid]="isFieldInvalid('email')"
+              />
+            </div>
+            <small 
+              *ngIf="isFieldInvalid('email')" 
+              class="p-error block mt-1"
+            >
+              <ng-container *ngIf="loginForm.get('email')?.hasError('required')">
+                Email is required
+              </ng-container>
+              <ng-container *ngIf="loginForm.get('email')?.hasError('email')">
+                Please enter a valid email address
+              </ng-container>
+            </small>
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium">
+              Password
+            </label>
+            <div class="mt-1">
+              <p-password
+                id="password"
+                formControlName="password"
+                [feedback]="false"
+                [toggleMask]="true"
+                placeholder="Enter your password"
+                [class.ng-invalid]="isFieldInvalid('password')"
+                styleClass="w-full"
+              ></p-password>
+            </div>
+            <small 
+              *ngIf="isFieldInvalid('password')" 
+              class="p-error block mt-1"
+            >
+              <ng-container *ngIf="loginForm.get('password')?.hasError('required')">
+                Password is required
+              </ng-container>
+              <ng-container *ngIf="loginForm.get('password')?.hasError('minlength')">
+                Password must be at least 8 characters
+              </ng-container>
+            </small>
+          </div>
+
+          <div>
+            <p-button
+              type="submit"
+              label="Sign in"
+              [loading]="isLoading"
+              [disabled]="loginForm.invalid || isLoading"
+              styleClass="w-full"
+            ></p-button>
+          </div>
+
+          <div class="text-center">
+            <a 
+              href="#" 
+              class="text-sm text-blue-600 hover:text-blue-500"
+              (click)="$event.preventDefault(); onForgotPassword()"
+            >
+              Forgot your password?
+            </a>
+          </div>
+        </form>
+      </p-card>
+    </div>
+  </div>
