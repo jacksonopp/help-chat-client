@@ -20,7 +20,7 @@
             "input": "apps/help-chat-portal/public"
           }
         ],
-        "styles": ["apps/help-chat-portal/src/styles.css"]
+        "styles": ["apps/help-chat-portal/src/styles.css", "libs/styles/main.css"]
       },
       "configurations": {
         "production": {
@@ -57,7 +57,8 @@
           "buildTarget": "help-chat-portal:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "port": 4300
     },
     "extract-i18n": {
       "executor": "@angular/build:extract-i18n",
@@ -80,7 +81,7 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "help-chat-portal:build",
-        "port": 4200,
+        "port": 4300,
         "staticFilePath": "dist/apps/help-chat-portal/browser",
         "spa": true
       }

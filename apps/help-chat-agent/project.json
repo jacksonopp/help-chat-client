@@ -20,7 +20,7 @@
             "input": "apps/help-chat-agent/public"
           }
         ],
-        "styles": ["apps/help-chat-agent/src/styles.css"]
+        "styles": ["apps/help-chat-agent/src/styles.css", "libs/styles/main.css"]
       },
       "configurations": {
         "production": {
