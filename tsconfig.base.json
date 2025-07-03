@@ -15,6 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@helpchat/services": ["libs/services/src/index.ts"],
+      "@helpchat/shared": ["libs/shared/src/index.ts"],
       "@helpchat/types": ["libs/types/src/index.ts"],
       "@helpchat/ui": ["libs/ui/src/index.ts"]
     }
