@@ -1,0 +1,38 @@
+<div class="min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full space-y-8">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4">
+          Welcome to HelpChat
+        </h1>
+        <p class="text-lg mb-8">
+          Your comprehensive help desk and support management system
+        </p>
+      </div>
+
+      <p-card>
+        <div class="text-center space-y-6">
+          <div *ngIf="isAuthenticated; else notAuthenticated">
+            <p class="mb-4">
+              Welcome back! You are currently logged in.
+            </p>
+            <p-button
+              label="Go to Dashboard"
+              (onClick)="goToDashboard()"
+              styleClass="w-full"
+            ></p-button>
+          </div>
+
+          <ng-template #notAuthenticated>
+            <p class="mb-4">
+              Please sign in to access your dashboard and manage support tickets.
+            </p>
+            <p-button
+              label="Sign In"
+              (onClick)="goToLogin()"
+              styleClass="w-full"
+            ></p-button>
+          </ng-template>
+        </div>
+      </p-card>
+    </div>
+  </div>

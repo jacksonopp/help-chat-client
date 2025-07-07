@@ -29,12 +29,16 @@
               *ngIf="isFieldInvalid('email')" 
               class="p-error block mt-1"
             >
-              <ng-container *ngIf="loginForm.get('email')?.hasError('required')">
-                Email is required
-              </ng-container>
-              <ng-container *ngIf="loginForm.get('email')?.hasError('email')">
-                Please enter a valid email address
-              </ng-container>
+              @if (loginForm.controls.email.hasError('required')) {
+                <ng-container>
+                  Email is required
+                </ng-container>
+              }
+              @if (loginForm.controls.email.hasError('email')) {
+                <ng-container>
+                  Please enter a valid email address
+                </ng-container>
+              }
             </small>
           </div>
 
@@ -57,12 +61,16 @@
               *ngIf="isFieldInvalid('password')" 
               class="p-error block mt-1"
             >
-              <ng-container *ngIf="loginForm.get('password')?.hasError('required')">
-                Password is required
-              </ng-container>
-              <ng-container *ngIf="loginForm.get('password')?.hasError('minlength')">
-                Password must be at least 8 characters
-              </ng-container>
+              @if (loginForm.controls.password.hasError('required')) {
+                <ng-container>
+                  Password is required
+                </ng-container>
+              }
+              @if (loginForm.controls.password.hasError('minlength')) {
+                <ng-container>
+                  Password must be at least 8 characters
+                </ng-container>
+              }
             </small>
           </div>
 

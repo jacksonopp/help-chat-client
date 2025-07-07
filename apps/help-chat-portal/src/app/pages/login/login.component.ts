@@ -1,6 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -23,16 +29,18 @@ import { LoginRequest } from '@helpchat/types';
     PasswordModule,
     CardModule,
     MessageModule,
-    ToastModule
+    ToastModule,
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
-  styles: [`
-    :host {
-      display: block;
-      height: 100vh;
-    }
-  `]
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100vh;
+      }
+    `,
+  ],
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
@@ -40,14 +48,20 @@ export class LoginComponent {
   private readonly router = inject(Router);
   private readonly messageService = inject(MessageService);
 
-  loginForm: FormGroup;
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
   isLoading = false;
 
   constructor() {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
+    // this.loginForm = this.fb.group({
+    //   email: ['', [Validators.required, Validators.email]],
+    //   password: ['', [Validators.required, Validators.minLength(8)]]
+    // });
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -66,22 +80,22 @@ export class LoginComponent {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: `Welcome back, ${response.user.first_name}!`
+            detail: `Welcome back, ${response.user.first_name}!`,
           });
-          
+
           // Navigate to dashboard or home page
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
-            console.error("ERROR:", error)
+          console.error('ERROR:', error);
           this.isLoading = false;
           this.messageService.add({
             key: 'login-toast',
             severity: 'error',
             summary: 'Error',
-            detail: error.error?.message || 'Login failed. Please try again.'
+            detail: error.error?.message || 'Login failed. Please try again.',
           });
-        }
+        },
       });
     } else {
       this.markFormGroupTouched();
@@ -94,7 +108,7 @@ export class LoginComponent {
   }
 
   private markFormGroupTouched(): void {
-    Object.keys(this.loginForm.controls).forEach(key => {
+    Object.keys(this.loginForm.controls).forEach((key) => {
       const control = this.loginForm.get(key);
       control?.markAsTouched();
     });
