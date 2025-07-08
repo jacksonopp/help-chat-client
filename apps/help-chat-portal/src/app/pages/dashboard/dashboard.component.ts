@@ -1,20 +1,15 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@helpchat/services';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { AvatarModule } from 'primeng/avatar';
-import { AuthService } from '@helpchat/services';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    ButtonModule,
-    CardModule,
-    AvatarModule
-  ],
+  imports: [CommonModule, ButtonModule, CardModule, AvatarModule],
   template: `
     <div class="min-h-screen bg-gray-50">
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -37,9 +32,13 @@ import { AuthService } from '@helpchat/services';
                   shape="circle"
                 ></p-avatar>
                 <div>
-                  <h3 class="text-lg font-semibold">{{ currentUser?.first_name }} {{ currentUser?.last_name }}</h3>
+                  <h3 class="text-lg font-semibold">
+                    {{ currentUser?.first_name }} {{ currentUser?.last_name }}
+                  </h3>
                   <p class="text-gray-600">{{ currentUser?.email }}</p>
-                  <p class="text-sm text-gray-500">Role: {{ currentUser?.role }}</p>
+                  <p class="text-sm text-gray-500">
+                    Role: {{ currentUser?.role }}
+                  </p>
                 </div>
               </div>
             </p-card>
@@ -48,13 +47,23 @@ import { AuthService } from '@helpchat/services';
               <div class="space-y-2">
                 <div class="flex justify-between">
                   <span>Status:</span>
-                  <span [class]="currentUser?.is_active ? 'text-green-600' : 'text-red-600'">
+                  <span
+                    [class]="
+                      currentUser?.is_active ? 'text-green-600' : 'text-red-600'
+                    "
+                  >
                     {{ currentUser?.is_active ? 'Active' : 'Inactive' }}
                   </span>
                 </div>
                 <div class="flex justify-between">
                   <span>Verified:</span>
-                  <span [class]="currentUser?.is_verified ? 'text-green-600' : 'text-red-600'">
+                  <span
+                    [class]="
+                      currentUser?.is_verified
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    "
+                  >
                     {{ currentUser?.is_verified ? 'Yes' : 'No' }}
                   </span>
                 </div>
@@ -67,6 +76,12 @@ import { AuthService } from '@helpchat/services';
 
             <p-card header="Quick Actions">
               <div class="space-y-3">
+                <p-button
+                  label="Create Ticket"
+                  styleClass="w-full"
+                  severity="primary"
+                  (onClick)="goToCreateTicket()"
+                ></p-button>
                 <p-button
                   label="View Profile"
                   styleClass="w-full"
@@ -83,7 +98,7 @@ import { AuthService } from '@helpchat/services';
         </div>
       </div>
     </div>
-  `
+  `,
 })
 export class DashboardComponent {
   private readonly authService = inject(AuthService);
@@ -93,7 +108,9 @@ export class DashboardComponent {
 
   get userInitials(): string {
     if (!this.currentUser) return '';
-    return `${this.currentUser.first_name.charAt(0)}${this.currentUser.last_name.charAt(0)}`.toUpperCase();
+    return `${this.currentUser.first_name.charAt(
+      0
+    )}${this.currentUser.last_name.charAt(0)}`.toUpperCase();
   }
 
   get lastLoginDate(): string {
@@ -110,7 +127,11 @@ export class DashboardComponent {
         console.error('Logout error:', error);
         // Still navigate to login even if logout fails
         this.router.navigate(['/login']);
-      }
+      },
     });
   }
-} 
+
+  goToCreateTicket() {
+    this.router.navigate(['/tickets/create']);
+  }
+}

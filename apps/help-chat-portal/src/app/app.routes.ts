@@ -29,6 +29,14 @@ export const appRoutes: Route[] = [
     canActivate: [authGuard],
   },
   {
+    path: 'tickets/create',
+    loadComponent: () =>
+      import('./pages/create-ticket/create-ticket.component').then(
+        (c) => c.CreateTicketComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     redirectTo: '/',
   },
