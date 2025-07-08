@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { AuthGuard } from '@helpchat/services';
+import { authGuard } from '@helpchat/services';
 
 export const appRoutes: Route[] = [
   {
@@ -26,7 +26,7 @@ export const appRoutes: Route[] = [
       import('./pages/dashboard/dashboard.component').then(
         (c) => c.DashboardComponent
       ),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: '**',
