@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @plugin "tailwindcss-primeui";
+
+@layer base {
+    a {
+        @apply text-blue-600 hover:text-blue-700 dark:text-blue-300 hover:dark:text-blue-400 hover:underline;
+    }
+}

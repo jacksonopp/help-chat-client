@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,16 +7,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { CardModule } from 'primeng/card';
-import { MessageModule } from 'primeng/message';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@helpchat/services';
 import { LoginRequest } from '@helpchat/types';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +30,7 @@ import { LoginRequest } from '@helpchat/types';
     CardModule,
     MessageModule,
     ToastModule,
+    RouterModule,
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
@@ -72,7 +73,22 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      const credentials: LoginRequest = this.loginForm.value;
+      const { email, password } = this.loginForm.getRawValue();
+
+      if (!email || !password) {
+        this.messageService.add({
+          key: 'login-toast',
+          severity: 'warn',
+          summary: 'Missing Fields',
+          detail: 'Please enter both your email and password.',
+        });
+        return;
+      }
+
+      const credentials: LoginRequest = {
+        email,
+        password,
+      };
 
       this.authService.login(credentials).subscribe({
         next: (response) => {
@@ -105,6 +121,11 @@ export class LoginComponent {
   onForgotPassword(): void {
     // Navigate to forgot password page
     this.router.navigate(['/forgot-password']);
+  }
+
+  onRegister(): void {
+    // Navigate to register page
+    this.router.navigate(['/register']);
   }
 
   private markFormGroupTouched(): void {

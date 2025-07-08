@@ -14,6 +14,13 @@ export const appRoutes: Route[] = [
       import('./pages/login/login.component').then((c) => c.LoginComponent),
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/register/register.component').then(
+        (c) => c.RegisterComponent
+      ),
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./pages/dashboard/dashboard.component').then(

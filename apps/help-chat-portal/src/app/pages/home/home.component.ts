@@ -1,9 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@helpchat/services';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { AuthService } from '@helpchat/services';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +25,10 @@ export class HomeComponent implements OnInit {
 
   goToLogin(): void {
     this.router.navigate(['/login']);
+  }
+
+  goToRegister(): void {
+    this.router.navigate(['/register']);
   }
 
   goToDashboard(): void {

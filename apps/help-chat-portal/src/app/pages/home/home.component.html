@@ -26,11 +26,19 @@
             <p class="mb-4">
               Please sign in to access your dashboard and manage support tickets.
             </p>
-            <p-button
-              label="Sign In"
-              (onClick)="goToLogin()"
-              styleClass="w-full"
-            ></p-button>
+            <div class="space-y-3">
+              <p-button
+                label="Sign In"
+                (onClick)="goToLogin()"
+                styleClass="w-full"
+              ></p-button>
+              <p-button
+                label="Create Account"
+                severity="secondary"
+                (onClick)="goToRegister()"
+                styleClass="w-full"
+              ></p-button>
+            </div>
           </ng-template>
         </div>
       </p-card>
